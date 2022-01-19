@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const { check, query } = require("express-validator");
 const { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios } = require("../controller/usuarios");
-const { validarCampos } = require("../middlewares/validar-campos");
 const { esRolValido, existeEmail, existeUsuarioID, validarLimite } = require("../helpers/db-validators");
+
+const { validarCampos, validarJWT, validarAdminRol, tieneRol } = require("../middlewares/index");
 
 const router = Router();
 router.get("/:id?", [query(["limite", "desde"]).custom(validarLimite), validarCampos], getUsuarios);
@@ -36,7 +37,14 @@ router.put(
 
 router.delete(
    "/:id",
-   [check("id", "No es un id válido").isMongoId(), check("id").custom(existeUsuarioID), validarCampos],
+   [
+      validarJWT,
+      // validarAdminRol,  //este middleware fuerza a que el user sea admin
+      tieneRol("ADMIN", "VENTAS"),
+      check("id", "No es un id válido").isMongoId(),
+      check("id").custom(existeUsuarioID),
+      validarCampos,
+   ],
    deleteUsuarios
 );
 

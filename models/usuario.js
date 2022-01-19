@@ -47,7 +47,9 @@ UsuarioSchema = Schema({
 //se sobreescribe la función toJSON para eliminar los objetos que no me interesa retornar
 UsuarioSchema.methods.toJSON = function () {
    //se saca en dos variables __V y password y todo lo demás se empaqueta en usuario
-   const {__v, password, ...usuario} = this.toObject();
+   const {__v, password, _id, ...usuario} = this.toObject();
+   //se cambia el nombre de _id por uid, se extrae la variable y se crea la nueva llave
+   usuario.uid = _id;
    return usuario;
 }
 

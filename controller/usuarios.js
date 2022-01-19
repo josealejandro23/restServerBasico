@@ -7,9 +7,7 @@ const Usuario = require('../models/usuario');
 const getUsuarios = async (req = request, res = response) => {
    try {
       //se leen los querys que vienen en la url
-      const { limite = 5, desde = 0 } = req.query; //leer querys de una petición
-      // if (isNaN(limite)) res.json({ error: "El límite debe ser un número" });
-      // if (isNaN(desde)) res.json({ error: 'El "desde" debe ser un número' });
+      const { limite = 15, desde = 0 } = req.query; 
 
       const query = { estado: true };
       //se traen todos los usuarios de la db
@@ -80,11 +78,15 @@ const deleteUsuarios = async (req, res = response) => {
 
    //eliminación física de la DB, no recomendado
    // const usuario = await Usuario.findByIdAndDelete( id );
-
+   // const uid = req.uid;
    const usuario = await Usuario.findByIdAndUpdate( id, {estado : false} )
+   
+   //obtener usuario autenticado
+   const usuarioautenticado = req.usuario;
 
    res.json({
-      usuario
+      usuario,
+      usuarioautenticado,
    });
 };
 

@@ -24,7 +24,8 @@ const existeUsuarioID = async (id) => {
    }
 };
 
-const validarLimite = ( query ) =>{
+const validarLimite = ( query = '') =>{
+   if(query === '') return true;
    if(isNaN(query)) throw new Error('Las querys límite y desde deben ser números');
    return true
 }
