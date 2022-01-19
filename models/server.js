@@ -2,15 +2,22 @@ const express = require("express");
 var cors = require("cors");
 require("colors");
 
+const { dbConnection } = require("../database/config");
 class ServidorSencillo {
    constructor() {
       (this.port = process.env.PORT),
          (this.app = express()),
-         (this.pathUsuarios = "/api/usuarios"),
+         //inicialización de la DB
+         this.connectDB();
+      (this.pathUsuarios = "/api/usuarios"),
          //middlewares
          this.middlewares();
       //rutas de la aplicación
       this.rutas();
+   }
+
+   async connectDB() {
+      await dbConnection();
    }
 
    middlewares() {
