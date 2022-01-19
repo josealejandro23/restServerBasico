@@ -8,8 +8,8 @@ const getUsuarios = async (req = request, res = response) => {
    try {
       //se leen los querys que vienen en la url
       const { limite = 5, desde = 0 } = req.query; //leer querys de una petición
-      if (isNaN(limite)) res.json({ error: "El límite debe ser un número" });
-      if (isNaN(desde)) res.json({ error: 'El "desde" debe ser un número' });
+      // if (isNaN(limite)) res.json({ error: "El límite debe ser un número" });
+      // if (isNaN(desde)) res.json({ error: 'El "desde" debe ser un número' });
 
       const query = { estado: true };
       //se traen todos los usuarios de la db

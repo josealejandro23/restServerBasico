@@ -1,12 +1,11 @@
 const { Router } = require("express");
-const { check } = require("express-validator");
+const { check, query } = require("express-validator");
 const { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios } = require("../controller/usuarios");
-const {validarCampos} = require('../middlewares/validar-campos');
-const { esRolValido, existeEmail, existeUsuarioID } = require("../helpers/db-validators");
-
+const { validarCampos } = require("../middlewares/validar-campos");
+const { esRolValido, existeEmail, existeUsuarioID, validarQuery } = require("../helpers/db-validators");
 
 const router = Router();
-router.get("/:id?", getUsuarios);
+router.get("/:id?", [check(query).custom(validarQuery), validarCampos], getUsuarios);
 
 router.post(
    "/",
@@ -35,11 +34,9 @@ router.put(
    putUsuarios
 );
 
-router.delete("/:id",[
-   check("id", "No es un id válido").isMongoId(), 
-   check("id").custom(existeUsuarioID),
-   validarCampos
-],
+router.delete(
+   "/:id",
+   [check("id", "No es un id válido").isMongoId(), check("id").custom(existeUsuarioID), validarCampos],
    deleteUsuarios
 );
 
