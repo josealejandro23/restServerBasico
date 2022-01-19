@@ -2,10 +2,10 @@ const { Router } = require("express");
 const { check, query } = require("express-validator");
 const { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios } = require("../controller/usuarios");
 const { validarCampos } = require("../middlewares/validar-campos");
-const { esRolValido, existeEmail, existeUsuarioID, validarQuery } = require("../helpers/db-validators");
+const { esRolValido, existeEmail, existeUsuarioID, validarLimite } = require("../helpers/db-validators");
 
 const router = Router();
-router.get("/:id?", [check(query).custom(validarQuery), validarCampos], getUsuarios);
+router.get("/:id?", [query(["limite", "desde"]).custom(validarLimite), validarCampos], getUsuarios);
 
 router.post(
    "/",

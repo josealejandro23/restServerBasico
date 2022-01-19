@@ -24,14 +24,14 @@ const existeUsuarioID = async (id) => {
    }
 };
 
-const validarQuery = ( query ) =>{
-   if (isNaN(query.limite)) throw new Error("El límite debe ser un número");
-   if (isNaN(query.desde)) throw new Error("desde debe ser un número");
+const validarLimite = ( query ) =>{
+   if(isNaN(query)) throw new Error('Las querys límite y desde deben ser números');
+   return true
 }
 
 module.exports = {
    esRolValido,
    existeEmail,
    existeUsuarioID,
-   validarQuery,
+   validarLimite,
 };
