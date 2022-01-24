@@ -6,7 +6,9 @@ const { esRolValido, existeEmail, existeUsuarioID, validarLimite } = require("..
 const { validarCampos, validarJWT, validarAdminRol, tieneRol } = require("../middlewares/index");
 
 const router = Router();
-router.get("/:id?", [query(["limite", "desde"]).custom(validarLimite), validarCampos], getUsuarios);
+router.get("/:id?", [
+   query(["limite", "desde"]).custom(validarLimite), validarCampos
+], getUsuarios);
 
 router.post(
    "/",
