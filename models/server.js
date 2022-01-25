@@ -8,7 +8,7 @@ class ServidorSencillo {
       (this.port = process.env.PORT),
          (this.app = express()),
          //inicialización de la DB
-         this.connectDB();
+         // this.connectDB();
       (this.pathUsuarios = "/api/usuarios"),
       this.pathLogin = "/api/login",
          //middlewares
@@ -38,7 +38,8 @@ class ServidorSencillo {
    }
 
    inicio() {
-      this.app.listen(this.port, () => {
+      this.app.listen(this.port, async () => {
+         await this.connectDB();
          console.log("Server corriendo en", this.port.toString().green);
       });
    }

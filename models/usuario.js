@@ -32,6 +32,7 @@ UsuarioSchema = Schema({
    rol:{
       type : String,
       required : [true,'Indique un rol'],
+      default:'USER'
       // enum : ['ADMIN','USER']
    },
    estado:{
