@@ -5,14 +5,16 @@ require("colors");
 const { dbConnection } = require("../database/config");
 class ServidorSencillo {
    constructor() {
-      (this.port = process.env.PORT),
-         (this.app = express()),
-         //inicialización de la DB
-         // this.connectDB();
-      (this.pathUsuarios = "/api/usuarios"),
-      this.pathLogin = "/api/login",
-         //middlewares
-         this.middlewares();
+      this.port = process.env.PORT,
+      this.app = express(),
+      this.paths = {
+         pathUsuarios : "/api/usuarios",
+         pathLogin : "/api/login", 
+         categorias : "/api/categorias",
+         productos : "/api/producto"
+      }
+      //middlewares
+      this.middlewares();
       //rutas de la aplicación
       this.rutas();
    }
@@ -33,8 +35,10 @@ class ServidorSencillo {
    rutas() {
       //al usar el sgte middleware indico que cuando se llame a la ruta api/usuarios se dirijan las peticiones
       //al objeto de ruta del archivo y allí se manejará la respuesta
-      this.app.use(this.pathLogin, require('../routes/login'));
-      this.app.use(this.pathUsuarios, require("../routes/usuarios"));
+      this.app.use(this.paths.pathLogin, require('../routes/login'));
+      this.app.use(this.paths.pathUsuarios, require("../routes/usuarios"));
+      this.app.use(this.paths.categorias, require("../routes/categorias"));
+      this.app.use(this.paths.productos, require("../routes/productos"));
    }
 
    inicio() {
