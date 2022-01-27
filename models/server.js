@@ -9,9 +9,11 @@ class ServidorSencillo {
       this.app = express(),
       this.paths = {
          pathUsuarios : "/api/usuarios",
-         pathLogin : "/api/login", 
-         categorias : "/api/categorias",
-         productos : "/api/producto"
+         pathLogin :    "/api/login", 
+         categorias :   "/api/categorias",
+         productos :    "/api/producto",
+         bucar :        "/api/buscar",
+         buscarXCategoria: "/api/categoria" 
       }
       //middlewares
       this.middlewares();
@@ -39,6 +41,8 @@ class ServidorSencillo {
       this.app.use(this.paths.pathUsuarios, require("../routes/usuarios"));
       this.app.use(this.paths.categorias, require("../routes/categorias"));
       this.app.use(this.paths.productos, require("../routes/productos"));
+      this.app.use(this.paths.bucar, require("../routes/buscar"));
+      this.app.use(this.paths.buscarXCategoria, require("../routes/buscarPorCategoria"));
    }
 
    inicio() {
