@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { cargarArchivo, actualizarImagen, mostrarImagen } = require("../controller/upload");
+const { cargarArchivo, actualizarImagen, mostrarImagen, actualizarImagenCloudinary } = require("../controller/upload");
 const { validarColeccionesPermitidas } = require("../helpers");
 const { validarJWT, validarCampos, validarArchivoSubir } = require("../middlewares");
 const router = Router();
@@ -22,6 +22,7 @@ router.put('/:coleccion/:id', [
    check('coleccion').custom( c => validarColeccionesPermitidas(c, ['usuarios','productos'])),
    validarCampos,
    validarArchivoSubir
-], actualizarImagen);
+],actualizarImagenCloudinary)
+// ], actualizarImagen); //se reemplaza por almacenamiento cloud con cloudinary
 
 module.exports = router;

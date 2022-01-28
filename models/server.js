@@ -36,12 +36,11 @@ class ServidorSencillo {
       this.app.use(express.static("public"));
       //carga de archivos
       this.app.use(fileUpload({
-            useTempFiles: true,
-            tempFileDir: "/tmp/",
-            createParentPath : true //permite que se cree un directorio si no existe
-      })
+         useTempFiles: true,
+         tempFileDir: "/tmp/",
+         createParentPath : true //permite que se cree un directorio de almacenamiento si no existe
+         })
       );
-
    }
 
    rutas() {
@@ -54,7 +53,6 @@ class ServidorSencillo {
       this.app.use(this.paths.bucar, require("../routes/buscar"));
       this.app.use(this.paths.buscarXCategoria, require("../routes/buscarPorCategoria"));
       this.app.use(this.paths.uploads, require("../routes/uploads"));
-
    }
 
    inicio() {
