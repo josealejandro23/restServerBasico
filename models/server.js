@@ -1,5 +1,6 @@
 const express = require("express");
 var cors = require("cors");
+const fileUpload = require('express-fileupload');
 require("colors");
 
 const { dbConnection } = require("../database/config");
@@ -13,7 +14,8 @@ class ServidorSencillo {
          categorias :   "/api/categorias",
          productos :    "/api/producto",
          bucar :        "/api/buscar",
-         buscarXCategoria: "/api/categoria" 
+         buscarXCategoria: "/api/categoria" ,
+         uploads        :"/api/uploads"
       }
       //middlewares
       this.middlewares();
@@ -32,6 +34,14 @@ class ServidorSencillo {
       this.app.use(express.json());
       //se sirve el index.html de la carpeta public cuando se llama al server sin path en el url
       this.app.use(express.static("public"));
+      //carga de archivos
+      this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: "/tmp/",
+            createParentPath : true //permite que se cree un directorio si no existe
+      })
+      );
+
    }
 
    rutas() {
@@ -43,6 +53,8 @@ class ServidorSencillo {
       this.app.use(this.paths.productos, require("../routes/productos"));
       this.app.use(this.paths.bucar, require("../routes/buscar"));
       this.app.use(this.paths.buscarXCategoria, require("../routes/buscarPorCategoria"));
+      this.app.use(this.paths.uploads, require("../routes/uploads"));
+
    }
 
    inicio() {
