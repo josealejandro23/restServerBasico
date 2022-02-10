@@ -2,9 +2,9 @@ const { Categoria, Role, Usuario, Producto } = require("../models");
 
 const esRolValido = async (rol = "") => {
    //find one verifica contra la DB en busca del objeto pasado como argumento
-   const existeRol = await Role.findOne({ rol });
-   if (!existeRol) {
-      throw new Error(`El rol ${rol} no existe en la db`);
+   rol = rol.toLowerCase();
+   if((rol !== 'admin') && (rol !== 'user')){
+      throw new Error(`El rol ${rol} no está permitido`);
    }
 };
 

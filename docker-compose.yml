@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mongo-db:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - "27018:27017"  #que mapee el puerto 27017 del docker en el puerto 27018 del host 
+    volumes:
+      - ./mongoDBs:/data/db   #con esto decimos que la carpeta data/db que es donde mongo guarda las dbs se almacene en la carpeta del host mongoDBs para tener datos persistentes
+    networks:
+      - mongo-network
+      
+  mongo-express:  # este contenedor permite visualizar mongodb desde el navegador, es opcional pero útil para ver la db y sus datos
+    image: mongo-express:0.54
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo-db
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: root
+      ME_CONFIG_MONGODB_PORT: 27017
+    networks:
+      - mongo-network
+
+networks:  # se define una red para que todos los contenedores compartan conexión
+  mongo-network:
+    driver: bridge

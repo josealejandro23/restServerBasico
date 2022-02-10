@@ -1,3 +1,4 @@
+const {Server} = require('http');
 const express = require("express");
 var cors = require("cors");
 const fileUpload = require('express-fileupload');
@@ -6,6 +7,7 @@ require("colors");
 const { dbConnection } = require("../database/config");
 class ServidorSencillo {
    constructor() {
+      this.server = new Server();
       this.port = process.env.PORT,
       this.app = express(),
       this.paths = {
@@ -21,10 +23,6 @@ class ServidorSencillo {
       this.middlewares();
       //rutas de la aplicación
       this.rutas();
-   }
-
-   async connectDB() {
-      await dbConnection();
    }
 
    middlewares() {
@@ -56,8 +54,8 @@ class ServidorSencillo {
    }
 
    inicio() {
-      this.app.listen(this.port, async () => {
-         await this.connectDB();
+      this.server = this.app.listen(this.port, async () => {
+         await dbConnection();
          console.log("Server corriendo en", this.port.toString().green);
       });
    }
