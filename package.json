@@ -4,7 +4,7 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "test": "cross-env NODE_ENV=test cls && jest --verbose --silent --detectOpenHandles", 
+      "test": "cross-env NODE_ENV=test cls && jest --verbose --detectOpenHandles --silent test/crudUsuarios.test.js",
       "test:watch": "npm run test -- --watchAll",
       "start": "cross-env NODE_ENV=production node app.js",
       "dev": "cross-env NODE_ENV=development nodemon app.js"

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const serverExpress = require("../app");
 const {Usuario} = require('../models');
-const { users } = require('./initialUsers');
+const { users, usersPost } = require("./initialUsers");
 
 //función a testear
 const sumar = (a, b) => {
@@ -31,22 +31,22 @@ const pruebas = [
 const api = supertest(serverExpress.app);
 
 // antes de cada test ejecutar el siguiente bloque
-beforeEach(async () => {
+// beforeEach(async () => {
    //eliminar toda la data previa
-   await Usuario.deleteMany();
+//    await Usuario.deleteMany();
 
-   //este método no asegura que la información se guarde en orden debe usarse el ciclo for of
-   // users.forEach(user => {
-   //    let newUser = new Usuario(user);
-   //    await newUser.save();
-   // })
+   // este método no asegura que la información se guarde en orden debe usarse el ciclo for of
+//    users.forEach(async user => {
+//       let newUser = new Usuario(user);
+//       await newUser.save();
+//    })
 
    //debe hacerse así para poder guardar en orden los usuarios ya que el save es asíncrono y usar la manera anterior con await no bloquearía el código
-   for (const user of users) {
-      const usuario = new Usuario(user);
-      await usuario.save();
-   }
-})
+//    for (const user of users) {
+//       const usuario = new Usuario(user);
+//       await usuario.save();
+//    }
+// })
 
 describe('testing tipo de datos, longitud de respuesta y longitud de info en la db' , ( ) => {
    test("validar que el response sea JSON", async () => {
@@ -63,7 +63,7 @@ describe('testing tipo de datos, longitud de respuesta y longitud de info en la 
 
    test("validar que la longitud de los datos sea correcta", async () => {
       const response = await api.get("/api/usuarios");
-      expect(response.body.usuarios).toHaveLength(users.length);
+      expect(response.body.usuarios).toHaveLength(usersPost.length);
    }, 20000);
 });
 

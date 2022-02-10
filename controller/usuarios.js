@@ -48,7 +48,7 @@ const postUsuarios = async (req = request, res = response) => {
    //guardar en db
    await usuario.save();
  
-   res.json({
+   res.status(201).json({
       usuario 
    });
 };
@@ -66,10 +66,10 @@ const putUsuarios = async (req = request, res = response) => {
       resto.password = bcryptjs.hashSync(password, salt);
    }
    //se busca el objeto por id y se actualiza directamente
-   const usuarioDB = await Usuario.findByIdAndUpdate(id,resto);
+   const usuario = await Usuario.findByIdAndUpdate(id,resto,{new:true});
 
    res.json({
-      usuarioDB
+      usuario
    });
 };
 
@@ -79,7 +79,7 @@ const deleteUsuarios = async (req, res = response) => {
    //eliminación física de la DB, no recomendado
    // const usuario = await Usuario.findByIdAndDelete( id );
    // const uid = req.uid;
-   const usuario = await Usuario.findByIdAndUpdate( id, {estado : false} )
+   const usuario = await Usuario.findByIdAndUpdate( id, {estado : false}, {new:true} )
    
    //obtener usuario autenticado
    const usuarioautenticado = req.usuario;

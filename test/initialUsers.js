@@ -26,7 +26,7 @@ const usersPost = [
    {
       nombre: "test4",
       correo: "test4@test.com",
-      rol: "USER",
+      rol: "ADMIN",
       password: "123456",
       google: false,
    },
@@ -46,7 +46,7 @@ const usersPost = [
    },
 ];
 
-const userPost = {
+const userPut = {
    nombre: "alejandro",
    correo: "alejo@test.com",
    rol: "ADMIN",
@@ -54,4 +54,9 @@ const userPost = {
    google: false,
 }
 
-module.exports = { users, usersPost, userPost };
+const loginUser = {
+   correo: "test4@test.com",
+   password: "123456",
+};
+
+module.exports = { users, usersPost, userPut, loginUser };
